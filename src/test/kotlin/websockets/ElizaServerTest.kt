@@ -1,10 +1,8 @@
 @file:Suppress("NoWildcardImports")
 package websockets
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.*
@@ -46,8 +44,8 @@ class ElizaServerTest {
         val client = ElizaOnOpenMessageHandlerToComplete(list, latch)
         container.connectToServer(client, URI("ws://localhost:$port/eliza"))
         latch.await()
-        Assertions.assertTrue(list.size > 3)
-        assertEquals("You don't seem very certain.", list[3])
+        assertTrue(list.size > 3)
+        assertEquals("Can you think of a specific example?", list[3])
     }
 }
 
@@ -68,7 +66,7 @@ class ElizaOnOpenMessageHandlerToComplete(private val list: MutableList<String>,
         list.add(message)
         latch.countDown()
         if (list.size == 3) {
-            session.basicRemote.sendText("maybe")
+            session.basicRemote.sendText("always")
         }
     }
 }
